@@ -21,6 +21,10 @@ export function getNotesCollection() {
   return typedCollection<Note>('notes')
 }
 
+export function noteDoc(id: string) {
+  return doc(getNotesCollection(), id)
+}
+
 export function getUsersCollection() {
   return typedCollection<UserProfile>('users')
 }
