@@ -55,13 +55,6 @@ service cloud.firestore {
 
       allow delete: if false; // soft-delete only — set deletedAt field instead
     }
-
-    // Add new collection rules above this comment using the /firebase-collection skill.
-
-    // ── Default deny ───────────────────────────────────────────────────────
-    match /{document=**} {
-      allow read, write: if false;
-    }
     
     match /notes/{noteId} {
       allow read:   if isAuthenticated() && isOwner(resource.data.uid);
@@ -69,6 +62,13 @@ service cloud.firestore {
       allow update: if isAuthenticated() && isOwner(resource.data.uid)
                     && request.resource.data.uid == resource.data.uid;
       allow delete: if false;  // soft-delete only — set deletedAt instead
+    }
+
+    // Add new collection rules above this comment using the /firebase-collection skill.
+
+    // ── Default deny ───────────────────────────────────────────────────────
+    match /{document=**} {
+      allow read, write: if false;
     }
   }
 }
